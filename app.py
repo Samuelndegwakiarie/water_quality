@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import joblib
 
 app = Flask(__name__)
@@ -15,28 +15,31 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Check if request has JSON data
-        if not request.is_json:
-            return jsonify({'error': 'Request must be in JSON format'}), 400
+        # Handle form submission (if applicable)
+        if request.method == 'POST':
+            # Extract feature values from form data
+            feature1 = request.form.get('feature1')
+            feature2 = request.form.get('feature2')
 
-        # Get input data from request
-        data = request.json
+            # Convert feature values to float (assuming numerical features)
+            feature1 = float(feature1)
+            feature2 = float(feature2)
+        else:
+            # Handle JSON data (if applicable)
+            data = request.json
+            # Extract feature values from JSON data
+            feature1 = data.get('feature1')
+            feature2 = data.get('feature2')
 
-        # Check for required keys in the data
-        if 'features' not in data:
-            return jsonify({'error': 'Missing required key: features'}), 400
+            # Convert feature values to float (assuming numerical features)
+            feature1 = float(feature1)
+            feature2 = float(feature2)
 
-        # Preprocess input data if necessary
-        # (This step will depend on how your model was trained)
-
-        # Extract features from the data
-        features = data['features']
-
-        # Make predictions using the loaded model
-        predictions = model.predict(features)
+        # Perform prediction using the loaded model
+        prediction = model.predict([[feature1, feature2]])
 
         # Return predictions as JSON response
-        return jsonify({'predictions': predictions.tolist()})
+        return jsonify({'prediction': prediction.tolist()})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
