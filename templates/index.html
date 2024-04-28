@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: white; /* Set background color to white */
+        }
+        form {
+            margin: 50px auto; /* Center the form horizontally */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            background-color: #f9f9f9; /* Set form background color */
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        p {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/predict" method="post">
+  Variable 1: <input type="text" name="feature1"><br>
+  Variable 2: <input type="text" name="feature2"><br>
+  <button type="submit">Predict</button>
+</form>
+
+<p>Prediction: {{ prediction }}</p>  <!-- Access prediction from template -->
+
+</body>
+</html>
